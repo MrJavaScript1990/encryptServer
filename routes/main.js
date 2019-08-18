@@ -65,8 +65,8 @@ router.post('/getEncryptedData', function (req, res) {
 router.post('/sendEncryptedData', function (req, res) {
     console.log(req.body.eData);
     const encryptedStr = req.body.eData;
-
     console.log(decryptObject(encryptedStr));
+    res.json({data:'Hash received and decoded by server ! please check the server logs for more info'});
 });
 
 

@@ -1,7 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
-const users = require('./routes/main');
+const main = require('./routes/main');
 const helmet=require('helmet');
 const app = express();
 
@@ -10,11 +10,16 @@ app.use(helmet());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-//end points that client will call to them
-app.use('/api', users);
+
+app.use('/api', main);
+
+app.use(express.static(path.join(__dirname, 'Client/build')));
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname+'/Client/build/index.html'));
+});
 
 //client can see if server running...
-app.get('/', function(req, res) {
+app.get('/status', function(req, res) {
     res.send('Server Is Running');
 });
 
